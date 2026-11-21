@@ -1,0 +1,27 @@
+# Track 9 Auto & Tire — Crawler & AI Search Policy
+User-agent: *
+Allow: /
+
+# AI Search & Assistant Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://track9autotire.com/sitemap.xml

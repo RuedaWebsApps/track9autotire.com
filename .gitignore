@@ -1,0 +1,16 @@
+# Dependencies & build output
+node_modules/
+dist/
+dist-ssr/
+.vite/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs & OS artifacts
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db

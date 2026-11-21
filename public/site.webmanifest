@@ -1,0 +1,20 @@
+{
+  "name": "Track 9 Auto & Tire",
+  "short_name": "Track 9",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e3eaf2",
+  "theme_color": "#293279",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
