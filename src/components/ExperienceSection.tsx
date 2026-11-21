@@ -26,68 +26,30 @@ export function ExperienceSection({ content, onSelectImage }: ExperienceSectionP
   return (
     <section
       id={isEs ? 'experiencia' : 'about'}
-      className="py-16 sm:py-24 bg-[#060e03] text-white relative scroll-mt-20 overflow-hidden"
+      className="w-full bg-[#000000] text-white pt-[54px] pb-0 scroll-mt-[54px]"
     >
-      {/* Background glow accents */}
-      <div
-        className="absolute top-1/4 -left-20 w-96 h-96 bg-[#293279]/30 rounded-full blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute bottom-10 -right-20 w-96 h-96 bg-[#c3e942]/10 rounded-full blur-3xl pointer-events-none"
-        aria-hidden="true"
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* Left Column: Founder's Story & Trust Metrics */}
-          <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[#c3e942] text-xs font-bold uppercase tracking-wider border border-white/10">
-              <span>{isEs ? 'Historia y Compromiso' : 'Our Story & Commitment'}</span>
-            </div>
-
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tight">
+      <div className="max-w-[1080px] mx-auto px-5 sm:px-6 lg:px-0">
+        {/* Row 1 (column_structure="2_5,3_5"): Left 2/5 H2 (49px) + Story (19px) | Right 3/5 Divi Fullwidth Gallery Slider */}
+        <div className="py-[27px] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-[5.5%] items-start">
+          {/* Left Column (2/5 -> 5 cols): H2 (Outfit 49px, line-height 1.3em) + Paragraph (Outfit 19px, line-height 1.8em) */}
+          <div className="lg:col-span-5">
+            <h2 className="font-outfit font-medium text-[28px] sm:text-[32px] lg:text-[49px] leading-[1.3em] text-white mb-[24px]">
               {aboutGallery.heading}
             </h2>
-
-            <div className="w-20 h-1 bg-[#e61c2e] rounded-full" />
-
-            <div className="text-white/80 text-sm sm:text-base leading-relaxed space-y-4">
-              <p>{aboutGallery.story}</p>
-            </div>
-
-            {/* Stats row */}
-            <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
-              <div className="bg-white/5 rounded-2xl p-4 border border-white/5 text-center">
-                <div className="text-2xl sm:text-3xl font-black text-[#c3e942]">18+</div>
-                <div className="text-xs text-white/70 font-semibold mt-1">
-                  {isEs ? 'Años en Llanteras' : 'Years Experience'}
-                </div>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-4 border border-white/5 text-center">
-                <div className="text-2xl sm:text-3xl font-black text-white">5+</div>
-                <div className="text-xs text-white/70 font-semibold mt-1">
-                  {isEs ? 'Años Negocio Propio' : 'Years Own Shop'}
-                </div>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-4 border border-white/5 text-center">
-                <div className="text-2xl sm:text-3xl font-black text-[#e61c2e]">100%</div>
-                <div className="text-xs text-white/70 font-semibold mt-1">
-                  {isEs ? 'Clientes Leales' : 'Customer Focus'}
-                </div>
-              </div>
-            </div>
+            <p className="font-outfit font-normal text-[16px] sm:text-[18px] lg:text-[19px] leading-[1.8em] text-white">
+              {aboutGallery.story}
+            </p>
           </div>
 
-          {/* Right Column: Photo Carousel */}
-          <div className="lg:col-span-6">
+          {/* Right Column (3/5 -> 7 cols): Divi Fullwidth Gallery Slider (.et_pb_gallery.et_pb_slider) */}
+          <div className="lg:col-span-7">
             <div
-              className="relative bg-white/5 rounded-3xl p-3 sm:p-4 border border-white/15 shadow-2xl backdrop-blur-xs"
+              className="group relative w-full overflow-hidden bg-[#000000]"
               aria-label={aboutGallery.carouselLabel}
             >
-              {/* Main Image Container */}
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-black/60 flex items-center justify-center">
-                <picture key={active.id}>
+              {/* Active Slide Image */}
+              <div className="relative w-full flex items-center justify-center">
+                <picture key={active.id} className="w-full block">
                   <source
                     srcSet={`/images/${active.baseName}-${active.widths[active.widths.length - 1]}.avif`}
                     type="image/avif"
@@ -107,28 +69,36 @@ export function ExperienceSection({ content, onSelectImage }: ExperienceSectionP
                       onSelectImage &&
                       onSelectImage(
                         `/images/${active.baseName}-${active.widths[active.widths.length - 1]}.webp`,
-                        active.alt,
+                        active.alt
                       )
                     }
-                    className={`w-full h-full object-cover transition-opacity duration-300 ${
-                      active.isLogo ? 'object-contain p-8' : 'cursor-pointer hover:scale-102 transition-transform duration-500'
-                    }`}
+                    className="w-full h-auto max-h-[840px] object-contain mx-auto block cursor-zoom-in transition-opacity duration-300"
                   />
                 </picture>
 
-                {/* Caption bar */}
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 sm:p-5 flex items-center justify-between text-xs sm:text-sm text-white">
-                  <span className="font-medium drop-shadow">{active.caption}</span>
-                  <span className="text-xs font-bold text-[#c3e942] shrink-0 ml-3">
-                    {currentSlide + 1} {aboutGallery.slideOf} {slides.length}
-                  </span>
-                </div>
-              </div>
+                {/* Divi Slider Left / Right Hover Arrows (.et-pb-arrow-prev / .et-pb-arrow-next) */}
+                <button
+                  type="button"
+                  onClick={prevSlide}
+                  aria-label={aboutGallery.prevLabel}
+                  className="absolute left-0 group-hover:left-[22px] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-[42px] leading-none p-2 bg-black/35 hover:bg-black/65 rounded-full cursor-pointer focus:opacity-100"
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  onClick={nextSlide}
+                  aria-label={aboutGallery.nextLabel}
+                  className="absolute right-0 group-hover:right-[22px] top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white text-[42px] leading-none p-2 bg-black/35 hover:bg-black/65 rounded-full cursor-pointer focus:opacity-100"
+                >
+                  ›
+                </button>
 
-              {/* Carousel Controls */}
-              <div className="flex items-center justify-between pt-4 px-2">
-                {/* Dots Indicator */}
-                <div className="flex items-center gap-1.5" role="tablist">
+                {/* Divi Slider Pagination Controllers (.et-pb-controllers: 7x7px dots at bottom 20px) */}
+                <div
+                  className="absolute bottom-[20px] inset-x-0 flex items-center justify-center gap-[10px] z-10"
+                  role="tablist"
+                >
                   {slides.map((slide, idx) => (
                     <button
                       key={slide.id}
@@ -137,37 +107,13 @@ export function ExperienceSection({ content, onSelectImage }: ExperienceSectionP
                       role="tab"
                       aria-selected={currentSlide === idx}
                       aria-label={`Slide ${idx + 1}`}
-                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                      className={`w-[7px] h-[7px] rounded-full transition-opacity duration-200 cursor-pointer ${
                         currentSlide === idx
-                          ? 'w-7 bg-[#c3e942]'
-                          : 'w-2.5 bg-white/30 hover:bg-white/60'
+                          ? 'bg-white opacity-100'
+                          : 'bg-white/50 opacity-50 hover:opacity-80'
                       }`}
                     />
                   ))}
-                </div>
-
-                {/* Prev / Next Buttons */}
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={prevSlide}
-                    aria-label={aboutGallery.prevLabel}
-                    className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#c3e942]"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={nextSlide}
-                    aria-label={aboutGallery.nextLabel}
-                    className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#c3e942]"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
                 </div>
               </div>
             </div>

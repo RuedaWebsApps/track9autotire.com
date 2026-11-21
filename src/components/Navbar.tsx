@@ -16,141 +16,121 @@ export function Navbar({ content, currentLocale, altHref }: NavbarProps) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const isEs = currentLocale === 'es';
   const navPrefix = isEs ? '/es' : '/';
-  const toggleLocaleHref = altHref ?? (isEs ? '/' : '/es');
-  const toggleLocaleLabel = isEs ? 'EN' : 'ES';
-  const toggleLocaleTitle = isEs ? 'Switch to English' : 'Cambiar a Español';
+  const enHref = altHref && isEs ? altHref : '/';
+  const esHref = altHref && !isEs ? altHref : '/es';
 
   const navLinks = isEs
     ? [
         { href: `${navPrefix}#servicios`, label: 'Servicios' },
         { href: `${navPrefix}#marcas`, label: 'Marcas' },
         { href: `${navPrefix}#especiales`, label: 'Especiales' },
-        { href: `${navPrefix}#experiencia`, label: 'Nosotros' },
+        { href: `${navPrefix}#experiencia`, label: 'Experiencia' },
         { href: `${navPrefix}#contacto`, label: 'Contacto' },
       ]
     : [
         { href: `${navPrefix}#services`, label: 'Services' },
         { href: `${navPrefix}#brands`, label: 'Brands' },
         { href: `${navPrefix}#specials`, label: 'Specials' },
-        { href: `${navPrefix}#about`, label: 'About Us' },
+        { href: `${navPrefix}#about`, label: 'Experience' },
         { href: `${navPrefix}#contact`, label: 'Contact' },
       ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#060e03]/95 backdrop-blur-md shadow-lg shadow-black/30 py-2.5 border-b border-white/10'
-          : 'bg-[#060e03] py-3.5 border-b border-white/5'
+      id="main-header"
+      style={{
+        boxShadow: isScrolled
+          ? '0 0 7px rgba(0, 0, 0, 0.12)'
+          : '0 1px 0 rgba(0, 0, 0, 0.08)',
+      }}
+      className={`fixed top-0 left-0 right-0 z-50 bg-[#ffffff] transition-all duration-400 ease-in-out ${
+        isScrolled ? 'h-[54px]' : 'h-[80px]'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo */}
+      <div className="max-w-[1080px] mx-auto px-4 sm:px-0 h-full flex items-center justify-between">
+        {/* Left Brand Shield Logo (Divi #logo: 43.19px at top -> 29.16px on scroll) */}
         <a
           href={isEs ? '/es' : '/'}
           aria-label={content.nav.homeAriaLabel}
-          className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c3e942] rounded-lg"
+          className="inline-flex items-center shrink-0 focus:outline-none"
         >
           <picture>
-            <source srcSet="/images/track9-logo-320.avif 1x, /images/track9-logo-320.avif 2x" type="image/avif" />
-            <source srcSet="/images/track9-logo-320.webp 1x, /images/track9-logo-320.webp 2x" type="image/webp" />
+            <source srcSet="/images/track9-badge-240.avif" type="image/avif" />
+            <source srcSet="/images/track9-badge-240.webp" type="image/webp" />
             <img
-              src="/images/track9-logo-320.webp"
-              alt="Track 9 Auto & Tire Logo"
-              width={160}
-              height={48}
-              className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              src="/images/track9-badge-240.webp"
+              alt="track9"
+              width={44}
+              height={44}
+              className={`w-auto object-contain transition-all duration-400 ease-in-out ${
+                isScrolled ? 'h-[29px]' : 'h-[43px]'
+              }`}
             />
           </picture>
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
+        {/* Desktop Top Menu (Divi #top-menu: 14px, 600 weight, active #2ea3f2, default rgba(0,0,0,0.6), hover opacity 0.7) */}
+        <nav
+          id="top-menu-nav"
+          aria-label="Main navigation"
+          className="hidden md:flex items-center gap-[22px] text-[14px] font-semibold"
+        >
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold text-white/90 hover:text-[#c3e942] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c3e942] rounded px-1 py-0.5"
+              className="text-black/60 hover:opacity-70 transition-opacity duration-400"
             >
               {link.label}
             </a>
           ))}
 
-          {/* Language Switcher */}
+          {/* Original Divi Language Links: Español & English */}
           <a
-            href={toggleLocaleHref}
-            title={toggleLocaleTitle}
-            aria-label={toggleLocaleTitle}
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-bold uppercase rounded-full border border-white/20 text-white hover:border-[#c3e942] hover:text-[#c3e942] transition-all bg-white/5 hover:bg-white/10"
+            href={esHref}
+            className={`hover:opacity-70 transition-opacity duration-400 ${
+              isEs ? 'text-[#2ea3f2]' : 'text-black/60'
+            }`}
           >
-            <span className={!isEs ? 'text-[#c3e942]' : 'text-white/60'}>EN</span>
-            <span className="text-white/40">|</span>
-            <span className={isEs ? 'text-[#c3e942]' : 'text-white/60'}>ES</span>
+            Español
           </a>
-
-          {/* Call / Quote CTA */}
           <a
-            href="tel:+12145248939"
-            className="inline-flex items-center gap-2 bg-[#e61c2e] hover:bg-[#c31826] text-white text-sm font-bold px-4 py-2 rounded-full shadow-md shadow-[#e61c2e]/20 hover:shadow-lg transition-all transform hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#c3e942]"
+            href={enHref}
+            className={`hover:opacity-70 transition-opacity duration-400 ${
+              !isEs ? 'text-[#2ea3f2]' : 'text-black/60'
+            }`}
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
-            <span>(214) 524-8939</span>
+            English
           </a>
         </nav>
 
-        {/* Mobile controls */}
-        <div className="flex items-center gap-2 md:hidden">
-          {/* Mobile Language Switcher */}
+        {/* Mobile Controls */}
+        <div className="flex items-center gap-4 md:hidden text-[14px] font-semibold">
           <a
-            href={toggleLocaleHref}
-            title={toggleLocaleTitle}
-            className="px-2.5 py-1 text-xs font-bold rounded-full border border-white/20 text-white bg-white/5"
+            href={esHref}
+            className={isEs ? 'text-[#2ea3f2]' : 'text-black/60'}
           >
-            {toggleLocaleLabel}
+            Español
           </a>
-
-          {/* Call button icon */}
           <a
-            href="tel:+12145248939"
-            aria-label="Call (214) 524-8939"
-            className="p-2 text-white bg-[#e61c2e] rounded-full"
+            href={enHref}
+            className={!isEs ? 'text-[#2ea3f2]' : 'text-black/60'}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-              />
-            </svg>
+            English
           </a>
-
-          {/* Hamburger toggle */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? content.nav.menuCloseLabel : content.nav.menuOpenLabel}
-            className="p-2 text-white/90 hover:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-[#c3e942]"
+            className="p-1.5 text-[#2ea3f2] focus:outline-none"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
@@ -163,27 +143,19 @@ export function Navbar({ content, currentLocale, altHref }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Dropdown (Divi .et_mobile_menu style: white background with 3px #2ea3f2 top border) */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#060e03]/98 border-b border-white/10 px-4 pt-3 pb-6 space-y-3 animate-rise">
+        <div className="md:hidden bg-white border-t-[3px] border-[#2ea3f2] shadow-lg px-6 py-4 space-y-2 text-[14px] font-semibold">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-semibold text-white/90 hover:text-[#c3e942] py-2 border-b border-white/5"
+              className="block py-2 text-black/70 hover:text-[#2ea3f2] border-b border-black/5"
             >
               {link.label}
             </a>
           ))}
-          <div className="pt-2">
-            <a
-              href="tel:+12145248939"
-              className="w-full flex items-center justify-center gap-2 bg-[#e61c2e] text-white font-bold py-3 rounded-xl text-center shadow-md"
-            >
-              <span>{isEs ? 'Llamar al (214) 524-8939' : 'Call (214) 524-8939'}</span>
-            </a>
-          </div>
         </div>
       )}
     </header>
